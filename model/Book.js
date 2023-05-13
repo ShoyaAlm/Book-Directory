@@ -8,7 +8,7 @@ const Book = new mongoose.Schema({
         maxLength: [120, 'Name is too long']
     },
     price:{
-        type: Int,
+        type: Number,
         required: [true, 'please enter the price of the book'],
     },
     author:{
@@ -18,7 +18,7 @@ const Book = new mongoose.Schema({
         maxLength: [100, 'Name is too long']
     },
     pages:{
-        type: Int,
+        type: Number,
         required: [true, 'please enter the number of pages'],
     }
 })

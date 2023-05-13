@@ -15,7 +15,17 @@ const getAllBooks = async (req, res) => {
 }
 
 
+const addBook = async (req, res) => {
+    try {
+        const book = await Book.create(req.body)
+        res.status(201).json({msg: 'successfull', book : book})
+    } catch (error) {
+        res.status(400).json({ msg : error })
+    }
+}
+
+
 module.exports = {
     getAllBooks,
-    
+    addBook,
 }
