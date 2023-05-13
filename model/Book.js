@@ -20,6 +20,10 @@ const Book = new mongoose.Schema({
     pages:{
         type: Number,
         required: [true, 'please enter the number of pages'],
+    },
+    genre:{
+        type: String,
+        required: [true, 'please enter the genre of the book']
     }
 })
 
