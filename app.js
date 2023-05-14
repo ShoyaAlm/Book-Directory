@@ -7,9 +7,6 @@ app.use(bodyParser.json())
 
 require('dotenv').config();
 
-app.get('/', (req, res) => {
-    res.send('Book Directory')
-})
 
 const router = require('./routes/routes')
 
@@ -18,7 +15,7 @@ app.use('/api/v1', router)
 app.use(express.json())
 
 app.use(express.static('./static'))
-app.use(express.urlencoded({ extended: false}))
+app.use(express.urlencoded({ extended: false }))
 
 const port = 3000;
 
