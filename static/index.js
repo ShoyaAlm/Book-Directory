@@ -37,7 +37,7 @@ try {
 
                 <h5 class="book-id">${_id}</h5>
 
-                <a class="edit-link">edit</a>
+                <a class="edit-link"><i class="edit-book">edit</i></a>
                 <hr/>
 
 

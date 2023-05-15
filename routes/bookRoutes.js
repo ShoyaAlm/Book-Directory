@@ -8,7 +8,7 @@ const {
     addBook,
     updateBook,
     deleteBook,
-} = require('../controllers/controller');
+} = require('../controllers/bookController');
 
 
 router.route('/').get(getAllBooks).post(addBook)
