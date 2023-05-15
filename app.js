@@ -8,9 +8,9 @@ app.use(bodyParser.json())
 require('dotenv').config();
 
 
-const bookRouter = require('./routes/routes')
+const router = require('./routes/routes')
 
-app.use('/api/v1', bookRouter)
+app.use('/api/v1', router)
 
 app.use(express.json())
 
