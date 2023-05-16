@@ -1,7 +1,7 @@
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
 
-const signIn = async (req, res) => {
+const signUp = async (req, res) => {
     const user = await User.create({...req.body})
     const token = user.createJWT()
     res.status(201).json({user: {name: user.name}, token})   
@@ -33,4 +33,4 @@ const login = async (req, res) => {
 
 }
 
-module.exports = {signIn, login}
+module.exports = {signUp, login}

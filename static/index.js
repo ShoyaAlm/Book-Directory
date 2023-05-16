@@ -5,7 +5,7 @@ const bookPages = document.querySelector('.book-pages')
 const bookGenre = document.querySelector('.book-genre')
 
 const bookDiv = document.querySelector('.book-div')
-
+const userDiv = document.querySelector('.user-div')
 
 const Showcase = async () => {
 
@@ -59,3 +59,56 @@ try {
 }
 
 Showcase()
+
+
+
+
+
+const showUsers = async () => {
+
+    try {
+        const {
+            data: users
+        } = await axios.get('/api/v1/users')
+        if(users.length < 1){
+            userDiv.innerHTML = '<h5>no users were found, error occurred!</h5>';
+            return
+        }
+    
+        const usersList = users.msg
+    
+        const allUsers = usersList.map((user) => {
+            const {_id, name, email, password} = user
+            return (
+                `<div class="single-book">
+    
+                    <h3 class="user-name">${name}</h3>
+    
+                    <h3 class="user-email">${email}$</h3>
+    
+                    <h3 class="user-password">${password}</h3>
+    
+                    <h5 class="user-id">${_id}</h5>
+    
+                    <a class="edit-link"><i class="edit-user">edit</i></a>
+                    <hr/>
+    
+    
+                </div>`
+    
+    
+            )
+        }).join('')
+    
+        userDiv.innerHTML = allUsers
+        
+    
+    
+    } catch (error) {
+        console.log(error);
+    }
+    
+    
+    }
+
+showUsers()
