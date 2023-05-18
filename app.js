@@ -9,8 +9,11 @@ require('dotenv').config();
 
 
 const router = require('./routes/routes')
+const auth = require('./routes/auth')
 
 app.use('/api/v1', router)
+app.use('/api/v1', auth)
+
 
 app.use(express.json())
 

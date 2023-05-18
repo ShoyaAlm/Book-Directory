@@ -64,51 +64,50 @@ Showcase()
 
 
 
-const showUsers = async () => {
+// const showUsers = async () => {
 
-    try {
-        const {
-            data: users
-        } = await axios.get('/api/v1/users')
-        if(users.length < 1){
-            userDiv.innerHTML = '<h5>no users were found, error occurred!</h5>';
-            return
-        }
+//     try {
+//         const {
+//             data: users
+//         } = await axios.get('/api/v1/users')
+//         if(users.length < 1){
+//             userDiv.innerHTML = '<h5>no users were found, error occurred!</h5>';
+//             return
+//         }
     
-        const usersList = users.msg
+//         const usersList = users.msg
     
-        const allUsers = usersList.map((user) => {
-            const {_id, name, email, password} = user
-            return (
-                `<div class="single-book">
+//         const allUsers = usersList.map((user) => {
+//             const {name, email, password} = user
+//             return (
+//                 `<div class="single-book">
     
-                    <h3 class="user-name">${name}</h3>
+//                     <h3 class="user-name">${name}</h3>
     
-                    <h3 class="user-email">${email}$</h3>
+//                     <h3 class="user-email">${email}$</h3>
     
-                    <h3 class="user-password">${password}</h3>
-    
-                    <h5 class="user-id">${_id}</h5>
-    
-                    <a class="edit-link"><i class="edit-user">edit</i></a>
-                    <hr/>
+//                     <h3 class="user-password">${password}</h3>
     
     
-                </div>`
+//                     <a class="edit-link"><i class="edit-user">edit</i></a>
+//                     <hr/>
     
     
-            )
-        }).join('')
+//                 </div>`
     
-        userDiv.innerHTML = allUsers
+    
+//             )
+//         }).join('')
+    
+//         userDiv.innerHTML = allUsers
         
     
     
-    } catch (error) {
-        console.log(error);
-    }
+//     } catch (error) {
+//         console.log(error);
+//     }
     
     
-    }
+//     }
 
-showUsers()
+// showUsers()

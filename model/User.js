@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const User = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name:{
         type: String,
         required: [true, 'enter the name of the user'],
@@ -26,31 +26,27 @@ const User = new mongoose.Schema({
         maxLength: [120, 'email is too long']        
     },
 
-
-    // books: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Book'
-    //   }]
-    
 })
 
 
-User.pre('save', async function(next){
+userSchema.pre('save', async function(next){
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
     next()
 })
 
 
-User.methods.createJWT = () => {
+userSchema.methods.createJWT = () => {
     return jwt.sign({userId:this._id, name:this.name}, 'jwtsecret', {expiresIn: '30d' })
 }
 
 
-User.methods.comparePassword = async (inputPassword) => {
+userSchema.methods.comparePassword = async (inputPassword) => {
     const isMatch = await bcrypt.compare(inputPassword, this.password)
     return isMatch
 }
 
+const User = mongoose.model('User',userSchema)
 
-module.exports = mongoose.model('User', User)
+
+module.exports = User

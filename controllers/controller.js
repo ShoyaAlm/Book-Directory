@@ -1,5 +1,5 @@
 const Book = require('../model/Book')
-const User = require('../model/User')
+
 
 const getAllBooks = async (req, res) => {
 
@@ -86,14 +86,7 @@ const updateBook = async (req, res) => {
 }
 
 
-const getUsers = async (req, res) => {
-    try {
-        const users = await User.find({})
-        res.status(200).json({msg : users })
-    } catch (error) {
-        res.status(400).json({msg: error })
-    }
-}
+
 
 module.exports = {
     getAllBooks,
@@ -101,5 +94,4 @@ module.exports = {
     addBook,
     deleteBook,
     updateBook,
-    getUsers,
 }

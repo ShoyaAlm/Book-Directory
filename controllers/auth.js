@@ -1,5 +1,5 @@
 const User = require('../model/User');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const signUp = async (req, res) => {
     const user = await User.create({...req.body})
@@ -33,4 +33,15 @@ const login = async (req, res) => {
 
 }
 
-module.exports = {signUp, login}
+
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find({})
+        res.status(200).send({users})
+    } catch (error) {
+        res.status(400).json({msg: error })
+    }
+}
+
+
+module.exports = {signUp, login, getUsers}
