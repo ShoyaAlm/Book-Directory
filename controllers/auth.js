@@ -1,4 +1,3 @@
-const User = require('../model/User');
 const bcrypt = require('bcryptjs');
 
 const signUp = async (req, res) => {
@@ -34,14 +33,6 @@ const login = async (req, res) => {
 }
 
 
-const getUsers = async (req, res) => {
-    try {
-        const users = await User.find({})
-        res.status(200).send({users})
-    } catch (error) {
-        res.status(400).json({msg: error })
-    }
-}
 
 
-module.exports = {signUp, login, getUsers}
+module.exports = {signUp, login}
