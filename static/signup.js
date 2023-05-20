@@ -3,6 +3,8 @@ const nameInp = document.querySelector('.name-input');
 const emailInp = document.querySelector('.email-input');
 const passwordInp = document.querySelector('.password-input');
 
+
+
 formDiv.addEventListener('submit', async (e) => {
   e.preventDefault();
   try {
@@ -14,10 +16,14 @@ formDiv.addEventListener('submit', async (e) => {
     const response = await axios.post('/api/v1/signin', data);
     console.log(response.data); // Assuming the server responds with data
     
+    let helloUser = document.querySelector('.hello-user')
+    helloUser.value = name
     // Clear input fields after successful submission
     nameInp.value = '';
     emailInp.value = '';
     passwordInp.value = '';
+    
+
   } catch (error) {
     if (error.response) {
       // The request was made and the server responded with a status code outside the range of 2xx

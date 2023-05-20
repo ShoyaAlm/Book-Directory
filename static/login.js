@@ -15,6 +15,11 @@ formDiv.addEventListener('submit', async (e) => {
     // Clear input fields after successful submission
     emailInp.value = '';
     passwordInp.value = '';
+
+    // let helloUser = document.querySelector('.hello-user')
+    // helloUser.value = 
+
+
   } catch (error) {
     if (error.response) {
       // The request was made and the server responded with a status code outside the range of 2xx

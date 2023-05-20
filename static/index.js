@@ -7,6 +7,8 @@ const bookGenre = document.querySelector('.book-genre')
 const bookDiv = document.querySelector('.book-div')
 const userDiv = document.querySelector('.user-div')
 
+let helloUser = document.querySelector('.hello-user')
+
 const Showcase = async () => {
 
 try {
@@ -69,25 +71,22 @@ const showUsers = async () => {
     try {
         const {
             data: users
-        } = await axios.get('/api/v1/users')
+        } = await axios.get('/api/v2/users')
         if(users.length < 1){
             userDiv.innerHTML = '<h5>no users were found, error occurred!</h5>';
             return
         }
     
-        const usersList = users.msg
+        const usersList = users.users
     
         const allUsers = usersList.map((user) => {
-            const {name, email, password} = user
+            const {name, email} = user
             return (
                 `<div class="single-book">
     
-                    <h3 class="user-name">${name}</h3>
+                    <h5 class="user-name">${name}</h5>
     
-                    <h3 class="user-email">${email}$</h3>
-    
-                    <h3 class="user-password">${password}</h3>
-    
+                    <h5 class="user-email">${email}</h5>    
     
                     <a class="edit-link"><i class="edit-user">edit</i></a>
                     <hr/>
@@ -111,3 +110,16 @@ const showUsers = async () => {
     }
 
 showUsers()
+
+
+// const getUserInfo = async () => {
+//     try {
+//       const { data: userInfo } = await axios.get('/api/v2/user-info');
+//       const userName = userInfo.name;
+//       helloUserElement.textContent = `Hello, ${userName}!`;
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+  
+//   getUserInfo();
