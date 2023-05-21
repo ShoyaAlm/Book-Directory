@@ -3,7 +3,7 @@ const nameInp = document.querySelector('.name-input');
 const emailInp = document.querySelector('.email-input');
 const passwordInp = document.querySelector('.password-input');
 
-
+const favButton = document.querySelector('.fav-button')
 
 formDiv.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -39,3 +39,20 @@ formDiv.addEventListener('submit', async (e) => {
     }
   }
 });
+
+//using async function to assign books to a specific user
+favButton.addEventListener('click', async () => {
+
+    // STEP 1
+    // how the fuck would i find who is signed in!??
+
+    // STEP 2
+    // found the user? assign the book
+
+    // STEP 3
+
+});
+
+// wait, i could put both signup & login in the same js file(i mean in here)
+// then, i define a global variable right here called 'curUser'
+// and everytime user signs up or logs in, i assign that user to the curUser
