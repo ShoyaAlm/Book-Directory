@@ -32,53 +32,51 @@ orderDiv.addEventListener("click", async () => {
     
 
 
-        console.log(booksList);
         if(orderBy == 'name'){
             booksList.sort((a, b) => {
-              const nameA = a.name.toUpperCase(); // Convert names to uppercase for case-insensitive sorting
+              const nameA = a.name.toUpperCase();
               const nameB = b.name.toUpperCase();
             
               if (nameA < nameB) {
-                return -1; // a should come before b
+                return -1;
               } else if (nameA > nameB) {
-                return 1; // a should come after b
+                return 1;
               } else {
-                return 0; // names are equal
+                return 0;
               }
             });
         }
 
         if(orderBy == 'price'){
             booksList.sort((a, b) => {
-              const priceA = a.price; // Convert names to uppercase for case-insensitive sorting
+              const priceA = a.price;
               const priceB = b.price;
             
               if (priceA < priceB) {
-                return -1; // a should come before b
+                return -1;
               } else if (priceA > priceB) {
-                return 1; // a should come after b
+                return 1;
               } else {
-                return 0; // names are equal
+                return 0;
               }
             });
         }
 
         if(orderBy == 'pages'){
             booksList.sort((a, b) => {
-              const pagesA = a.pages; // Convert names to uppercase for case-insensitive sorting
+              const pagesA = a.pages;
               const pagesB = b.pages;
             
               if (pagesA < pagesB) {
-                return -1; // a should come before b
+                return -1;
               } else if (pagesA > pagesB) {
-                return 1; // a should come after b
+                return 1;
               } else {
-                return 0; // names are equal
+                return 0;
               }
             });
         }
 
-        console.log(booksList);
         
         const allBooks = booksList.map((book) => {
             const {_id, name, price, author, pages, genre} = book
@@ -119,71 +117,62 @@ orderDiv.addEventListener("click", async () => {
         console.log(error);
     }
     
-
-    // const {
-    //     data: books
-    // } = await axios.get('/api/v1')
 })
 
 const Showcase = async () => {
 
-// try {
-//     const {
-//         data: books
-//     } = await axios.get('/api/v1')
-//     if(books.length < 1){
-//         bookDiv.innerHTML = '<h5>no books were found, error occurred!</h5>';
-//         return
-//     }
+try {
+    const {
+        data: books
+    } = await axios.get('/api/v1')
+    if(books.length < 1){
+        bookDiv.innerHTML = '<h5>no books were found, error occurred!</h5>';
+        return
+    }
 
-//     orderBy = orderDiv.value
 
-//     const booksList = books.msg.sort({orderBy: 1})
+    const booksList = books.books
 
-//     const allBooks = booksList.map((book) => {
-//         const {_id, name, price, author, pages, genre} = book
-//         return (
-//             `<div class="single-book">
+    const allBooks = booksList.map((book) => {
+        const {_id, name, price, author, pages, genre} = book
+        return (
+            `<div class="single-book">
 
-//                 <h3 class="book-name">${name}</h3>
+                <h3 class="book-name">${name}</h3>
 
-//                 <h3 class="book-price">${price}$</h3>
+                <h3 class="book-price">${price}$</h3>
 
-//                 <h3 class="book-author">${author}</h3>
+                <h3 class="book-author">${author}</h3>
 
-//                 <h3 class="book-genre">${genre}</h3>
+                <h3 class="book-genre">${genre}</h3>
 
-//                 <h3 class="book-pages">${pages} pages</h3>
+                <h3 class="book-pages">${pages} pages</h3>
 
-//                 <h5 class="book-id">${_id}</h5>
+                <h5 class="book-id">${_id}</h5>
 
-//                 <a class="edit-link"><i class="edit-book">edit</i></a>
-//                 <hr/>
+                <a class="edit-link"><i class="edit-book">edit</i></a>
+                <hr/>
                 
-//                 <button class="button-3" type="submit">Add to favorites</button>
+                <button class="button-3" type="submit">Add to favorites</button>
                 
-//             </div>`
+            </div>`
 
 
-//         )
-//     }).join('')
+        )
+    }).join('')
 
-//     bookDiv.innerHTML = allBooks
+    bookDiv.innerHTML = allBooks
     
 
 
-// } catch (error) {
-//     console.log(error);
-// }
+} catch (error) {
+    console.log(error);
+}
 
 
 }
 
 Showcase()
-
-
-
-
 
 const showUsers = async () => {
 

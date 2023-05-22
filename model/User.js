@@ -25,15 +25,28 @@ const userSchema = new mongoose.Schema({
         match:[/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'please provide valid email'],
         maxLength: [120, 'email is too long']        
     },
-
+    books: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book'
+    }]
 })
 
+userSchema.methods.comparePassword = async (inputPassword) => {
+    // const isMatch = await bcrypt.compare(inputPassword, this.password)
+    let isMatch
+    if(inputPassword == this.password){
+        isMatch = true
+    } else{
+        isMatch = false
+    }
+    return isMatch
+}
 
-userSchema.pre('save', async function(next){
-    const salt = await bcrypt.genSalt(10)
-    this.password = await bcrypt.hash(this.password, salt)
-    next()
-})
+// userSchema.pre('save', async function(next){
+//     const salt = await bcrypt.genSalt(10)
+//     this.password = await bcrypt.hash(this.password, salt)
+//     next()
+// })
 
 
 userSchema.methods.createJWT = () => {
@@ -41,10 +54,6 @@ userSchema.methods.createJWT = () => {
 }
 
 
-userSchema.methods.comparePassword = async (inputPassword) => {
-    const isMatch = await bcrypt.compare(inputPassword, this.password)
-    return isMatch
-}
 
 const User = mongoose.model('User',userSchema)
 
