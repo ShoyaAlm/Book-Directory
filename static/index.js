@@ -30,9 +30,61 @@ orderDiv.addEventListener("click", async () => {
 
         const booksList = books.books
     
+
+
         console.log(booksList);
+        if(orderBy == 'name'){
+            booksList.sort((a, b) => {
+              const nameA = a.name.toUpperCase(); // Convert names to uppercase for case-insensitive sorting
+              const nameB = b.name.toUpperCase();
+            
+              if (nameA < nameB) {
+                return -1; // a should come before b
+              } else if (nameA > nameB) {
+                return 1; // a should come after b
+              } else {
+                return 0; // names are equal
+              }
+            });
+        }
+
+        if(orderBy == 'price'){
+            booksList.sort((a, b) => {
+              const priceA = a.price; // Convert names to uppercase for case-insensitive sorting
+              const priceB = b.price;
+            
+              if (priceA < priceB) {
+                return -1; // a should come before b
+              } else if (priceA > priceB) {
+                return 1; // a should come after b
+              } else {
+                return 0; // names are equal
+              }
+            });
+        }
+
+        if(orderBy == 'pages'){
+            booksList.sort((a, b) => {
+              const pagesA = a.pages; // Convert names to uppercase for case-insensitive sorting
+              const pagesB = b.pages;
+            
+              if (pagesA < pagesB) {
+                return -1; // a should come before b
+              } else if (pagesA > pagesB) {
+                return 1; // a should come after b
+              } else {
+                return 0; // names are equal
+              }
+            });
+        }
+
+        console.log(booksList);
+        
         const allBooks = booksList.map((book) => {
             const {_id, name, price, author, pages, genre} = book
+            
+            
+
             return (
                 `<div class="single-book">
     
@@ -135,46 +187,46 @@ Showcase()
 
 const showUsers = async () => {
 
-    try {
-        const {
-            data: users
-        } = await axios.get('/api/v2/users')
-        if(users.length < 1){
-            userDiv.innerHTML = '<h5>no users were found, error occurred!</h5>';
-            return
-        }
+    // try {
+    //     const {
+    //         data: users
+    //     } = await axios.get('/api/v2/users')
+    //     if(users.length < 1){
+    //         userDiv.innerHTML = '<h5>no users were found, error occurred!</h5>';
+    //         return
+    //     }
     
-        const usersList = users.users
+    //     const usersList = users.users
     
-        const allUsers = usersList.map((user) => {
-            const {name, email} = user
-            return (
-                `<div class="single-book">
+    //     const allUsers = usersList.map((user) => {
+    //         const {name, email} = user
+    //         return (
+    //             `<div class="single-book">
     
-                    <h5 class="user-name">${name}</h5>
+    //                 <h5 class="user-name">${name}</h5>
     
-                    <h5 class="user-email">${email}</h5>    
+    //                 <h5 class="user-email">${email}</h5>    
     
-                    <a class="edit-link"><i class="edit-user">edit</i></a>
-                    <hr/>
-    
-    
-                </div>`
+    //                 <a class="edit-link"><i class="edit-user">edit</i></a>
+    //                 <hr/>
     
     
-            )
-        }).join('')
+    //             </div>`
     
-        userDiv.innerHTML = allUsers
+    
+    //         )
+    //     }).join('')
+    
+    //     userDiv.innerHTML = allUsers
         
-    } catch (error) {
-        console.log(error);
-    }
+    // } catch (error) {
+    //     console.log(error);
+    // }
     
     
     }
 
-showUsers()
+// showUsers()
 
 
 // const getUserInfo = async () => {
