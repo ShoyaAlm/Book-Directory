@@ -31,28 +31,22 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
-userSchema.methods.comparePassword = async (inputPassword) => {
-    // const isMatch = await bcrypt.compare(inputPassword, this.password)
-    let isMatch
-    if(inputPassword == this.password){
-        isMatch = true
-    } else{
-        isMatch = false
-    }
-    return isMatch
-}
 
-// userSchema.pre('save', async function(next){
-//     const salt = await bcrypt.genSalt(10)
-//     this.password = await bcrypt.hash(this.password, salt)
-//     next()
-// })
+userSchema.pre('save', async function(next){
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
+    next()
+})
 
 
 userSchema.methods.createJWT = () => {
     return jwt.sign({userId:this._id, name:this.name}, 'jwtsecret', {expiresIn: '30d' })
 }
 
+userSchema.methods.comparePassword = async function(inputPassword) {
+    const isMatch = await bcrypt.compare(inputPassword, this.password)
+    return isMatch
+}
 
 
 const User = mongoose.model('User',userSchema)

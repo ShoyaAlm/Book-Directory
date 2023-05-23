@@ -9,8 +9,23 @@ const userDiv = document.querySelector('.user-div')
 
 const orderDiv = document.querySelector('.order-div')
 
+const favButton = document.querySelector('.fav-button')
+
 let helloUser = document.querySelector('.hello-user')
 
+const userName = localStorage.getItem('username')
+console.log(userName);
+helloUser.textContent = `Hello ${userName}`
+
+
+const token = localStorage.getItem('jwtToken');
+if(token){
+  console.log(token);
+  
+
+} else{
+  console.log('no user is logged in');
+}
 
 orderDiv.addEventListener("click", async () => {
     console.log(orderDiv.value);
@@ -76,12 +91,9 @@ orderDiv.addEventListener("click", async () => {
               }
             });
         }
-
         
         const allBooks = booksList.map((book) => {
             const {_id, name, price, author, pages, genre} = book
-            
-            
 
             return (
                 `<div class="single-book">
@@ -101,7 +113,7 @@ orderDiv.addEventListener("click", async () => {
                     <a class="edit-link"><i class="edit-book">edit</i></a>
                     <hr/>
                     
-                    <button class="button-3" type="submit">Add to favorites</button>
+                    <button class="fav-button" type="submit">Add to favorites</button>
                     
                 </div>`
     
@@ -153,7 +165,7 @@ try {
                 <a class="edit-link"><i class="edit-book">edit</i></a>
                 <hr/>
                 
-                <button class="button-3" type="submit">Add to favorites</button>
+                <button class="fav-button" type="submit">Add to favorites</button>
                 
             </div>`
 
@@ -163,70 +175,30 @@ try {
 
     bookDiv.innerHTML = allBooks
     
-
-
 } catch (error) {
     console.log(error);
 }
-
 
 }
 
 Showcase()
 
-const showUsers = async () => {
 
-    // try {
-    //     const {
-    //         data: users
-    //     } = await axios.get('/api/v2/users')
-    //     if(users.length < 1){
-    //         userDiv.innerHTML = '<h5>no users were found, error occurred!</h5>';
-    //         return
-    //     }
-    
-    //     const usersList = users.users
-    
-    //     const allUsers = usersList.map((user) => {
-    //         const {name, email} = user
-    //         return (
-    //             `<div class="single-book">
-    
-    //                 <h5 class="user-name">${name}</h5>
-    
-    //                 <h5 class="user-email">${email}</h5>    
-    
-    //                 <a class="edit-link"><i class="edit-user">edit</i></a>
-    //                 <hr/>
-    
-    
-    //             </div>`
-    
-    
-    //         )
-    //     }).join('')
-    
-    //     userDiv.innerHTML = allUsers
-        
-    // } catch (error) {
-    //     console.log(error);
-    // }
-    
-    
+
+favButton.addEventListener('click', async (bookId) => {
+  try {
+      const token = localStorage.getItem('jwtToken');
+      const response = await axios.post(
+        '/api/v2/users',
+        { bookId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log('Book added to favorites:', response.data);
+    } catch (error) {
+      console.log(error);
     }
-
-// showUsers()
-
-
-// const getUserInfo = async () => {
-//     try {
-//       const { data: userInfo } = await axios.get('/api/v2/user-info');
-//       const userName = userInfo.name;
-//       helloUserElement.textContent = `Hello, ${userName}!`;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-  
-//   getUserInfo();
-
+})

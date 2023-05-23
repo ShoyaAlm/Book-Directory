@@ -12,13 +12,15 @@ formDivLogin.addEventListener('submit', async (e) => {
       const data = { email, password };
       const response = await axios.post('/api/v1/login', data);
       console.log(response.data.user.name); // Assuming the server responds with data
-      
+      localStorage.setItem('userId', response.data.user._id)
+      localStorage.setItem('username', response.data.user.name)
       // Clear input fields after successful submission
       emailInp.value = '';
       passwordInp.value = '';
   
-      curUser = response.data.user.name
-      alert(`Welcome back ${curUser}!`);
+      const token = response.data.token;
+      localStorage.setItem('jwtToken', token);
+      
       window.location.href = 'index.html';
   
     } catch (error) {
