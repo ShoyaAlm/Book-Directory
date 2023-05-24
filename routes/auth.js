@@ -4,7 +4,7 @@ const router = express.Router();
 
 const {signUp, login} = require('../controllers/auth')
 
-router.route('/signin').post(signUp)
+router.route('/signup').post(signUp)
 router.route('/login').post(login)
 
 

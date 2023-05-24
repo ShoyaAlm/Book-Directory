@@ -12,7 +12,7 @@ formDivSignup.addEventListener('submit', async (e) => {
     const password = passwordInp.value;
     
     const data = { name, email, password };
-    const response = await axios.post('/api/v1/signin', data);
+    const response = await axios.post('/api/v1/signup', data);
     console.log(response.data); // Assuming the server responds with data
     nameInp.value = '';
     emailInp.value = '';

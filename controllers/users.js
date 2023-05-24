@@ -48,16 +48,19 @@ const deleteUser = async (req, res) => {
 
 const addFavBooks = async (req, res) => {
 
-    const {id:id} = localStorage.getItem('userId')
+    const {id:id} = req.params
 
     try {
-        const user = await User.findOne({_id:id})
+        const user = await User.findByIdAndUpdate({_id:id})
 
         if(!user){
             return res.status(404).json({msg: `no user with id ${id}`})
         }
 
+
         res.status(200).json({user})
+
+
 
     } catch (error) {
         res.status(400).json({msg : error })

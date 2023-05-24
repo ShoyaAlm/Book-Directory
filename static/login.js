@@ -5,22 +5,25 @@ const passwordInp = document.querySelector('.password-input');
 
 formDivLogin.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const email = emailInp.value;
+    const password = passwordInp.value;
+    
+    const data = { email, password };
+    
     try {
-      const email = emailInp.value;
-      const password = passwordInp.value;
-      
-      const data = { email, password };
       const response = await axios.post('/api/v1/login', data);
       console.log(response.data.user.name); // Assuming the server responds with data
-      localStorage.setItem('userId', response.data.user._id)
       localStorage.setItem('username', response.data.user.name)
       // Clear input fields after successful submission
       emailInp.value = '';
       passwordInp.value = '';
+      // console.log(`data is ${response.data}`)
   
       const token = response.data.token;
+      const userId = response.data.user.id
       localStorage.setItem('jwtToken', token);
-      
+      localStorage.setItem('userId', userId)
+
       window.location.href = 'index.html';
   
     } catch (error) {
