@@ -1,22 +1,24 @@
-
 const bookDiv = document.querySelector('.book-div')
 
 const orderDiv = document.querySelector('.order-div')
 
-
 let helloUser = document.querySelector('.hello-user')
 
+let signinLogout = document.querySelector('.signup-login')
+
 const userName = localStorage.getItem('username')
-helloUser.textContent = `Hello ${userName}`
 
+let token = localStorage.getItem('jwtToken');
 
-const token = localStorage.getItem('jwtToken');
 if(token){
   console.log(token);
-  
+  helloUser.textContent = `Hello ${userName}`
+  signinLogout.textContent = 'Logout'
 
 } else{
+  signinLogout.textContent = 'Signup/Login'
   console.log('no user is logged in');
+
 }
 
 const Showcase = async () => {

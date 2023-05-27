@@ -7,8 +7,15 @@
     <title>Books</title>
     <link rel="stylesheet" href="index.css">
     <h1 style="text-align: center">Books</h1>
-    <h4 class="signup-login"><a href="./signup.html">signUp/login</a></h4>
     <h4 class="hello-user"></h4>
+    <a href="./signup.html" class="logout-link" style="text-decoration: none;">
+      <script>
+        const logoutLink = document.querySelector('.logout-link')
+        logoutLink.addEventListener('click', (e) => {
+          token = localStorage.setItem('jwtToken', '')
+        })
+      </script>  
+    <h4 class="signup-login"></h4></a>
     <hr>
 
 <label for="order">Order by :</label>

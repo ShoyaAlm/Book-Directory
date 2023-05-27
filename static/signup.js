@@ -14,6 +14,13 @@ formDivSignup.addEventListener('submit', async (e) => {
     const data = { name, email, password };
     const response = await axios.post('/api/v1/signup', data);
     console.log(response.data); // Assuming the server responds with data
+    localStorage.setItem('username', response.data.user.name)
+
+    const token = response.data.token;
+    const userId = response.data.user.id
+    localStorage.setItem('jwtToken', token);
+    localStorage.setItem('userId', userId)
+
     nameInp.value = '';
     emailInp.value = '';
     passwordInp.value = '';
