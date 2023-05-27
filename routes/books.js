@@ -8,10 +8,10 @@ const {
     addBook,
     updateBook,
     deleteBook,
-} = require('../controllers/controller');
+} = require('../controllers/books');
 
 
 router.route('/').get(getAllBooks).post(addBook)
 router.route('/:id').get(getOneBook).patch(updateBook).delete(deleteBook)
-
+    
 module.exports = router

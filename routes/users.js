@@ -8,7 +8,6 @@ const {
     } = require('../controllers/users')
 
 router.route('/').get(getUsers)
-router.route('/:id').delete(deleteUser)
-router.route('/:id').patch(addFavBooks)
+router.route('/:id').delete(deleteUser).patch(addFavBooks)
 
 module.exports = router

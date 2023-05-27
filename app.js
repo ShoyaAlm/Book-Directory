@@ -8,11 +8,11 @@ app.use(bodyParser.json())
 require('dotenv').config();
 
 
-const router = require('./routes/routes')
+const books = require('./routes/books')
 const auth = require('./routes/auth')
 const users = require('./routes/users')
 
-app.use('/api/v1', router)
+app.use('/api/v1', books)
 app.use('/api/v1', auth)
 app.use('/api/v2/users',users)
 

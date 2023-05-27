@@ -1,3 +1,4 @@
+
 const bookDiv = document.querySelector('.book-div')
 
 const orderDiv = document.querySelector('.order-div')
@@ -67,26 +68,42 @@ try {
       try {
         const bookIdElement = event.target.parentElement.querySelector('.book-id');
         const bookId = bookIdElement.textContent;
+        
+        const book = await axios.get(`/api/v1/${bookId}`)
+
+        console.log(book.data.msg); // this now has the whole detail of the book
+
+        const bookData = book.data.msg
 
         const token = localStorage.getItem('jwtToken');
-        const userId = localStorage.getItem('userId');
-        console.log(userId);
-        const response = await axios.patch(
-            `/api/v2/users/${userId}`,
-            { bookId },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-            );
 
-            console.log('Book added to favorites:', response.data);
+        const userId = localStorage.getItem('userId');
+
+        // const response = await axios.patch(
+        //     `/api/v2/users/${userId}`,
+        //     {bookData} ,
+        //     {
+        //       headers: {
+        //         Authorization: `Bearer ${token}`,
+        //       },
+        //     }
+        //     );
+        
+        const response = await axios.patch(
+          `/api/v2/users/${userId}`,
+          bookData, // Send the bookData directly without wrapping it in an object
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+            console.log('Book added to favorites: ', response.data);
           } catch (error) {
             console.log(error);
           }
         })
-    
+        
 } catch (error) {
     console.log(error);
 }
