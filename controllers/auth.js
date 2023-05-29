@@ -16,20 +16,21 @@ const login = async (req, res) => {
     }
 
     const user = await User.findOne({email})
-
+    
     if(!user){
         return res.status(404).json({msg: `no such user with email ${email} was found`})
     }
+    const isPasswordCorrect = await user.comparePassword(password)
 
-    const isPasswordCorrect = user.comparePassword(password)
 
     if(!isPasswordCorrect){
        return res.status(400).json({msg: 'password is not correct'})
     }
-
-
+        
     const token = user.createJWT()
     res.status(200).json({user: {name: user.name, id: user._id}, token})
+
+
 
 }
 
