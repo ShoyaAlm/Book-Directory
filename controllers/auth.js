@@ -16,32 +16,29 @@ const signUp = async (req, res) => {
 const login = async (req, res) => {
     const {email, password} = req.body
 
-    if (!email || !password){
-        throw new BadRequestError('Please provide both email & password')
-        // return res.status(400).json({msg: 'enter both email and password please...'})
-    }
-
-    const user = await User.findOne({email})
+    try {
+        if (!email || !password){
+            throw new BadRequestError('Please provide both email & password')
+        }
     
-    if(!user){
-        throw new NotFoundError('No user with that email was found')
-        // return res.status(404).json({msg: `no such user with email ${email} was found`})
-    }
+        const user = await User.findOne({email})
+        if(!user){
+            throw new NotFoundError('No user with that email was found')
+        }
+        
+        const isPasswordCorrect = await user.comparePassword(password)
+        if(!isPasswordCorrect){
+            throw new UnauthorizedError('Password is not correct')
+        }
 
-
-    const isPasswordCorrect = await user.comparePassword(password)
-
-    if(!isPasswordCorrect){
-        throw new UnauthorizedError('Password is not correct')
-    //    return res.status(400).json({msg: 'password is not correct'})
+        const token = user.createJWT()
+        res.status(200).json({user: {name: user.name, id: user._id}, token})
+        
+    } catch (error) {
+        console.log(error);
     }
         
-    const token = user.createJWT()
-    res.status(200).json({user: {name: user.name, id: user._id}, token})
 
 }
-
-
-
 
 module.exports = {signUp, login}
