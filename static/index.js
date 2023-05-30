@@ -20,88 +20,71 @@ if(token){
 
 }
 
-const Showcase = async () => {
 
-try {
-  const {
-        data: books
-      } = await axios.get('/api/v1')
-    if(books.length < 1){
-      bookDiv.innerHTML = '<h5>no books were found, error occurred!</h5>';
-      return
+
+const Showcase = async () => {
+  try {
+    const { data: books } = await axios.get('/api/v1');
+    if (books.length < 1) {
+      bookDiv.innerHTML = '<h5>No books were found. An error occurred!</h5>';
+      return;
     }
 
+    const booksList = books.books;
 
-    const booksList = books.books
-    
-    const allBooks = booksList.map((book) => {
-        const {_id, name, price, author, pages, genre} = book
-        return (
-            `<div class="single-book">
+    const allBooks = booksList
+      .map((book) => {
+        const { _id, name, price, author, pages, genre } = book;
+        return `
+          <div class="single-book">
+            <h3 class="book-name">${name}</h3>
+            <h3 class="book-price">${price}$</h3>
+            <h3 class="book-author">${author}</h3>
+            <h3 class="book-genre">${genre}</h3>
+            <h3 class="book-pages">${pages} pages</h3>
+            <h5 class="book-id">${_id}</h5>
+            <a class="edit-link"><i class="edit-book">edit</i></a>
+            <hr/>
+            <button class="fav-button" type="submit">Add to favorites</button>
+          </div>`;
+      })
+      .join('');
 
-                <h3 class="book-name">${name}</h3>
-                
-                <h3 class="book-price">${price}$</h3>
+    bookDiv.innerHTML = allBooks;
 
-                <h3 class="book-author">${author}</h3>
-
-                <h3 class="book-genre">${genre}</h3>
-                
-                <h3 class="book-pages">${pages} pages</h3>
-
-                <h5 class="book-id">${_id}</h5>
-                
-                <a class="edit-link"><i class="edit-book">edit</i></a>
-                <hr/>
-                
-                <button class="fav-button" type="submit">Add to favorites</button>
-                
-                </div>`
-
-
-        )
-    }).join('')
-
-    bookDiv.innerHTML = allBooks
-    const favButton = document.querySelector('.fav-button')
-    
-    favButton.addEventListener('click', async (event) => {
-      try {
-        const bookIdElement = event.target.parentElement.querySelector('.book-id');
-        const bookId = bookIdElement.textContent;
-        
-        const book = await axios.get(`/api/v1/${bookId}`)
-
-        console.log(book.data.msg); // this now has the whole detail of the book
-
-        const bookData = book.data.msg
-
-        const token = localStorage.getItem('jwtToken');
-
-        const userId = localStorage.getItem('userId');
-        
-        const response = await axios.patch(
-          `/api/v2/users/${userId}`,
-          bookData, // Send the bookData directly without wrapping it in an object
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-            console.log('Book added to favorites: ', response.data.user); 
-            // response.config.data = all details related to the book
-            // response.data.user = all details related to the user 
-          } catch (error) {
-            console.log(error);
-          }
-        })
-        
-} catch (error) {
+    const favButtons = document.querySelectorAll('.fav-button');
+    favButtons.forEach((favButton) => {
+      favButton.addEventListener('click', async (event) => {
+        try {
+          const bookIdElement = event.target.parentElement.querySelector('.book-id');
+          const bookId = bookIdElement.textContent;
+          const book = await axios.get(`/api/v1/${bookId}`);
+          console.log(book.data.msg); // This now has the whole detail of the book
+          const bookData = book.data.msg;
+          const token = localStorage.getItem('jwtToken');
+          const userId = localStorage.getItem('userId');
+          const response = await axios.patch(
+            `/api/v2/users/${userId}`,
+            bookData,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log('Book added to favorites: ', response.data.user);
+          // response.config.data = all details related to the book
+          // response.data.user = all details related to the user 
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    });
+  } catch (error) {
     console.log(error);
-}
+  }
+};
 
-}
 
 Showcase()
 
