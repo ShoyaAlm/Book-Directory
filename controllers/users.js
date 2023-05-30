@@ -1,4 +1,5 @@
 const User = require('../model/User')
+const { UnauthenticatedError } = require('../errors')
 
 const getUsers = async (req, res) => {
     try {
@@ -48,18 +49,19 @@ const deleteUser = async (req, res) => {
 
 const addFavBooks = async (req, res) => {
     const { id } = req.params;
-    const { data: book } = req.body;
+    const bookData = req.body;
     
     try {
-      const user = await User.findByIdAndUpdate(
+        
+        const user = await User.findByIdAndUpdate(
           id,
-        { $push: { books: book } }, // Use $push to add the book to the user's books array
+        { $addToSet: { books: bookData } }, // Use $push to add the book to the user's books array
         { new: true } // Return the updated user object
       );
   
       if (!user) {
-        return res.status(404).json({ msg: `No user with id ${id}` });
-      }
+        throw new UnauthenticatedError(`No user with the id ${id}`)
+    }
   
       res.status(200).json({ user });
     } catch (error) {

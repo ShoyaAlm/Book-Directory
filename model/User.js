@@ -27,7 +27,8 @@ const UserSchema = new mongoose.Schema({
     },
     books: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Book'
+        ref: 'Book',
+        unique: true
     }]
 })
 

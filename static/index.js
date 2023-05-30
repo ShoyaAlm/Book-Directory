@@ -11,7 +11,6 @@ const userName = localStorage.getItem('username')
 let token = localStorage.getItem('jwtToken');
 
 if(token){
-  console.log(token);
   helloUser.textContent = `Hello ${userName}`
   signinLogout.textContent = 'Logout'
 
@@ -80,16 +79,6 @@ try {
         const token = localStorage.getItem('jwtToken');
 
         const userId = localStorage.getItem('userId');
-
-        // const response = await axios.patch(
-        //     `/api/v2/users/${userId}`,
-        //     {bookData} ,
-        //     {
-        //       headers: {
-        //         Authorization: `Bearer ${token}`,
-        //       },
-        //     }
-        //     );
         
         const response = await axios.patch(
           `/api/v2/users/${userId}`,
@@ -100,7 +89,9 @@ try {
             },
           }
         );
-            console.log('Book added to favorites: ', response.data);
+            console.log('Book added to favorites: ', response.data.user); 
+            // response.config.data = all details related to the book
+            // response.data.user = all details related to the user 
           } catch (error) {
             console.log(error);
           }
